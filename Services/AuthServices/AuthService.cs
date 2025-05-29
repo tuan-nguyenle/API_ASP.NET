@@ -11,9 +11,9 @@ using System.Text;
 
 namespace ASP.Net.Services.AuthServices
 {
-    public class AuthService(UserDbContext context, IConfiguration configuration, IMapper mapper) : IAuthService
+    public class AuthService(AuthDbContext context, IConfiguration configuration, IMapper mapper) : IAuthService
     {
-        private readonly UserDbContext _context = context;
+        private readonly AuthDbContext _context = context;
         private readonly IConfiguration _configuration = configuration;
         private readonly IMapper _mapper = mapper;
 
@@ -25,10 +25,11 @@ namespace ASP.Net.Services.AuthServices
                     .FirstOrDefaultAsync(
                         u => (u.Email == userDTO.Email) || (u.Username == userDTO.Username)
                     );
+
                 if (existingUser != null)
                 {
                     var field = string.Equals(existingUser.Email, userDTO.Email, StringComparison.OrdinalIgnoreCase) ? "email" : "username";
-                    return ServiceResults<User>.Failure($"User with this {field} already exists");
+                    throw new Exception($"User with this {field} already exists");
                 }
 
                 var user = _mapper.Map<User>(userDTO);
@@ -45,8 +46,7 @@ namespace ASP.Net.Services.AuthServices
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.ToString());
-                return ServiceResults<User>.Failure("An error occurred during registration");
+                return ServiceResults<User>.Failure(ex.Message);
             }
         }
 
@@ -55,25 +55,20 @@ namespace ASP.Net.Services.AuthServices
             try
             {
                 var user = await _context.Users
-                    .FirstOrDefaultAsync(
-                        u => (u.Username == loginDTO.Username)
-                    );
-                if (user is null)
-                {
-                    return ServiceResults<string>.Failure("Not Found Username");
-                }
+                        .FirstOrDefaultAsync(
+                            u => (u.Username == loginDTO.Username)
+                        );
 
-                if (new PasswordHasher<User>().VerifyHashedPassword(user, user.Password, loginDTO.Password) == PasswordVerificationResult.Failed)
+                if (user is null || new PasswordHasher<User>().VerifyHashedPassword(user, user.Password, loginDTO.Password) == PasswordVerificationResult.Failed)
                 {
-                    return ServiceResults<string>.Failure("Wrong Username / Password");
+                    throw new Exception("Invalid username or password");
                 }
 
                 return ServiceResults<string>.Success(CreateToken(user));
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.ToString());
-                return ServiceResults<string>.Failure("An error occurred during Login");
+                return ServiceResults<string>.Failure(ex.Message);
             }
         }
 

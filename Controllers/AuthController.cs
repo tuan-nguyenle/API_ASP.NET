@@ -2,12 +2,7 @@
 using ASP.Net.Entities;
 using ASP.Net.Services.AuthServices;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Tokens;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
 
 namespace ASP.Net.Controllers
 {
@@ -25,11 +20,6 @@ namespace ASP.Net.Controllers
             {
                 return Ok(results.Data);
             }
-
-            //if (results.ValidationErrors.Count > 0)
-            //{
-            //    return BadRequest(new { results.ValidationErrors });
-            //}
 
             return BadRequest(results.ErrorMessage);
         }
