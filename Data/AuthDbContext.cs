@@ -9,6 +9,8 @@ namespace ASP.Net.Data
         public DbSet<Role> Roles { get; set; }
         public DbSet<Permission> Permissions { get; set; }
         public DbSet<Resource> Resources { get; set; }
+        public DbSet<UserRole> UserRoles { get; set; }
+        public DbSet<RolePermission> RolePermissions { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -57,6 +59,22 @@ namespace ASP.Net.Data
 
                 entity.HasIndex(e => e.Path).IsUnique();
             });
+
+            modelBuilder.Entity<UserRole>(entity =>
+            {
+                entity.Property(u => u.IsActive).HasDefaultValue(true);
+                entity.Property(u => u.Assigned_At).HasDefaultValueSql("GETDATE()");
+                entity.HasIndex(ur => new { ur.UserId, ur.RoleId }).IsUnique();
+            });
+
+            // RolePermission entity configuration
+            modelBuilder.Entity<RolePermission>(entity =>
+            {
+                entity.Property(rp => rp.IsActive).HasDefaultValue(true);
+                entity.Property(rp => rp.Assigned_At).HasDefaultValueSql("GETDATE()");
+                entity.HasIndex(rp => new { rp.RoleId, rp.PermissionId, rp.ResourceId }).IsUnique();
+            });
+
         }
     }
 }

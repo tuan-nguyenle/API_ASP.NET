@@ -35,8 +35,6 @@ namespace ASP.Net.Services.AuthServices
                 var user = _mapper.Map<User>(userDTO);
 
                 user.Password = new PasswordHasher<User>().HashPassword(user, userDTO.Password);
-                user.Created_At = DateTime.UtcNow;
-                user.Updated_At = DateTime.UtcNow;
 
                 _context.Users.Add(user);
 
