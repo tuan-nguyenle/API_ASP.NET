@@ -10,7 +10,6 @@ namespace ASP.Net.Controllers
     [ApiController]
     public class AuthController(IAuthService _authService) : Controller
     {
-        //private static readonly User user = new();
         [HttpPost("Register")]
         public async Task<ActionResult<User>> Register(UserDTO userDTO)
         {

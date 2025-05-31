@@ -6,6 +6,5 @@ namespace ASP.Net.Services.ResourceServices
     public interface IResouceService
     {
         Task<ServiceResults<Resource>> CreateResource(ResourceDTO resourceDTO);
-
     }
 }
