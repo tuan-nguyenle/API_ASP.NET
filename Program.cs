@@ -2,6 +2,7 @@ using ASP.Net.Configuration;
 using ASP.Net.Data;
 using ASP.Net.Services.AuthServices;
 using ASP.Net.Services.PermissionServices;
+using ASP.Net.Services.ResourceServices;
 using ASP.Net.Services.RoleServices;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
@@ -20,6 +21,7 @@ builder.Services.AddDbContext<AuthDbContext>(
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IRoleService, RoleService>();
 builder.Services.AddScoped<IPermissionService, PermissionService>();
+builder.Services.AddScoped<IResouceService, ResouceService>();
 
 builder.Services.AddAutoMapper(typeof(UserMappingProfile));
 builder.Services.AddControllers();

@@ -7,5 +7,6 @@ namespace ASP.Net.Services.AuthServices
     {
         Task<ServiceResults<User>> Register(UserDTO userDTO);
         Task<ServiceResults<string>> Login(LoginDTO loginDTO);
+        Task<ServiceResults<User>> GetUser(string username);
     }
 }

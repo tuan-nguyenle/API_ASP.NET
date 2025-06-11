@@ -16,5 +16,6 @@ namespace ASP.Net.DTOs.AuthDTOs
         [Required]
         [StringLength(100)]
         public string Name { get; set; } = string.Empty;
+        //public Dictionary<string, string> ExtraFields { get; set; } = [];
     }
 }

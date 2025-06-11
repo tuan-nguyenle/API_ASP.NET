@@ -8,7 +8,7 @@ namespace ASP.Net.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AuthController(IAuthService _authService) : Controller
+    public class AuthController(IAuthService _authService) : ControllerBase
     {
         [HttpPost("Register")]
         public async Task<ActionResult<User>> Register(UserDTO userDTO)
@@ -36,11 +36,18 @@ namespace ASP.Net.Controllers
             return Ok(results.Data);
         }
 
-        [HttpGet("me")]
+        [HttpGet("Profile/{username}")]
         [Authorize]
-        public ActionResult<string> Me()
+        public async Task<ActionResult<User>> Profile(string username)
         {
-            return Ok("Hehehe");
+            var results = await _authService.GetUser(username);
+
+            if (!results.IsSuccess)
+            {
+                return BadRequest(results.ErrorMessage);
+            }
+
+            return Ok(results.Data);
         }
     }
 }

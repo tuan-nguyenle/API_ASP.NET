@@ -11,8 +11,7 @@
         public Boolean IsActive { get; set; } = true;
         public DateTime Created_At { get; set; }
         public DateTime Updated_At { get; set; }
-        public Dictionary<string, string> ExtraFields { get; set; } = new();
-        public List<int> RoleIds { get; set; } = [];
-
+        //public string ExtraFields { get; set; } 
+        public List<Role> RoleIds { get; set; } = [];
     }
 }

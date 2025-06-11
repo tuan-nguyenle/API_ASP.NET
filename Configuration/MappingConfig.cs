@@ -1,4 +1,6 @@
 ﻿using ASP.Net.DTOs.AuthDTOs;
+using ASP.Net.DTOs.PermissionDTOs;
+using ASP.Net.DTOs.RoleDTOs;
 using ASP.Net.Entities;
 using AutoMapper;
 

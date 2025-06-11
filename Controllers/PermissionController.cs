@@ -1,4 +1,4 @@
-﻿using ASP.Net.DTOs.AuthDTOs;
+﻿using ASP.Net.DTOs.PermissionDTOs;
 using ASP.Net.Entities;
 using ASP.Net.Services.PermissionServices;
 using Microsoft.AspNetCore.Authorization;

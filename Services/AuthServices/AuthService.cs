@@ -17,6 +17,23 @@ namespace ASP.Net.Services.AuthServices
         private readonly IConfiguration _configuration = configuration;
         private readonly IMapper _mapper = mapper;
 
+        public async Task<ServiceResults<User>> GetUser(string username)
+        {
+            try
+            {
+                var user = await _context.Users.Include(u => u.RoleIds)
+                    .FirstOrDefaultAsync(
+                     u => u.Username == username
+                    ) ?? throw new Exception("Not found user");
+
+                return ServiceResults<User>.Success(user);
+            }
+            catch (Exception ex)
+            {
+                return ServiceResults<User>.Failure(ex.Message);
+            }
+        }
+
         public async Task<ServiceResults<User>> Register(UserDTO userDTO)
         {
             try

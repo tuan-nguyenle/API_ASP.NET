@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace ASP.Net.DTOs.AuthDTOs
+namespace ASP.Net.DTOs.PermissionDTOs
 {
     public class PermissionDTO
     {

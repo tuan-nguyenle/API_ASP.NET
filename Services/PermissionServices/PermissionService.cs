@@ -1,5 +1,5 @@
 ﻿using ASP.Net.Data;
-using ASP.Net.DTOs.AuthDTOs;
+using ASP.Net.DTOs.PermissionDTOs;
 using ASP.Net.Entities;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;

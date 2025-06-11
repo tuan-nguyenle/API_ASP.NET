@@ -1,5 +1,6 @@
 ﻿using ASP.Net.Entities;
 using Microsoft.EntityFrameworkCore;
+using System.Text.Json;
 
 namespace ASP.Net.Data
 {
@@ -24,6 +25,11 @@ namespace ASP.Net.Data
                     entity.Property(u => u.ImageUrl).HasDefaultValue("https://avatar.iran.liara.run/public/19");
                     entity.Property(u => u.Created_At).HasDefaultValueSql("GETDATE()");
                     entity.Property(u => u.Updated_At).HasDefaultValueSql("GETDATE()");
+                    //entity.Property(e => e.ExtraFields)
+                    //.HasConversion(
+                    //    v => JsonSerializer.Serialize(v, null),
+                    //    v => JsonSerializer.Deserialize<Dictionary<string, string>>(v, null)
+                    //);
 
                     entity.Ignore(e => e.RoleIds);
                 }
@@ -38,7 +44,6 @@ namespace ASP.Net.Data
                 entity.Property(u => u.IsActive).HasDefaultValue(true);
 
                 entity.HasIndex(e => e.Name).IsUnique();
-
             });
 
             modelBuilder.Entity<Permission>(entity =>
@@ -67,7 +72,6 @@ namespace ASP.Net.Data
                 entity.HasIndex(ur => new { ur.UserId, ur.RoleId }).IsUnique();
             });
 
-            // RolePermission entity configuration
             modelBuilder.Entity<RolePermission>(entity =>
             {
                 entity.Property(rp => rp.IsActive).HasDefaultValue(true);
